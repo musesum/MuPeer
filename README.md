@@ -1,3 +1,3 @@
 # MuPeer
 
-A description of this package.
+A bonjour wrapper
