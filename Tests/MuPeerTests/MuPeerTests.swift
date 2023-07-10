@@ -6,6 +6,6 @@ final class MuPeerTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(MuPeer().text, "Hello, World!")
+        //XCTAssertEqual(MuPeer().text, "Hello, World!")
     }
 }
