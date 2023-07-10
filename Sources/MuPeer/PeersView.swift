@@ -2,11 +2,12 @@
 
 import SwiftUI
 
-struct PeersView: View {
-    @ObservedObject var peersVm: PeersVm
+public struct PeersView: View {
+    @ObservedObject public var peersVm: PeersVm
     var peersTitle: String { peersVm.peersTitle }
     var peersList: String { peersVm.peersList }
-    var body: some View {
+    public init(_ peersVm: PeersVm) {self.peersVm = peersVm}
+    public var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "globe")

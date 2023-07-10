@@ -4,7 +4,7 @@ import SwiftUI
 import MultipeerConnectivity
 
 /// This is the View Model for PeersView
-class PeersVm: ObservableObject {
+public class PeersVm: ObservableObject {
 
     public static let shared = PeersVm()
 
@@ -18,7 +18,7 @@ class PeersVm: ObservableObject {
     private var peerCounter = [String: Int]()
     private var peerStreamed = [String: Bool]()
 
-    init() {
+    public init() {
         peersController = PeersController.shared
         peersController.peersDelegates.append(self)
         oneSecondCounter()
@@ -47,7 +47,7 @@ class PeersVm: ObservableObject {
 }
 extension PeersVm: PeersControllerDelegate {
 
-    func didChange() {
+    public func didChange() {
 
         var peerList = ""
 
@@ -66,7 +66,7 @@ extension PeersVm: PeersControllerDelegate {
     }
 
 
-    func received(data: Data, viaStream: Bool) {
+    public func received(data: Data, viaStream: Bool) {
 
         do {
             let message = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String : Any]
