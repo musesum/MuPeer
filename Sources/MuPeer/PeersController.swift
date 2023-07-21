@@ -87,7 +87,7 @@ extension PeersController {
     public func sendMessage(_ message: [String : Any],
                             viaStream: Bool) {
         if session.connectedPeers.isEmpty {
-            //print("🚫", terminator: "")
+            //print("⁉️", terminator: "")
             return
         }
         do {

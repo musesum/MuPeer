@@ -13,7 +13,7 @@ extension MCSessionState {
         switch self {
             case .connecting:   return "❓"
             case .connected:    return "🤝"
-            case .notConnected: return "🚫"
+            case .notConnected: return "⁉️"
             @unknown default:   return "‼️"
         }
     }
