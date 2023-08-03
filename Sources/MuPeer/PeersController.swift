@@ -75,7 +75,7 @@ public class PeersController: NSObject {
 
     func logPeer(_ body: PeerName) {
         #if false
-        let logTime = String(format: "%.2f", elapsedTime())
+        let logTime = String(format: "%.2f", timeElapsed())
         print("⚡️ \(logTime) \(myName): \(body)")
         #endif
     }
