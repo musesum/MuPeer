@@ -66,7 +66,7 @@ extension PeersVm: PeersControllerDelegate {
     }
 
 
-    public func received(data: Data, viaStream: Bool) {
+    public func received(data: Data, viaStream: Bool) -> Bool {
 
         do {
             let message = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String : Any]
@@ -82,11 +82,13 @@ extension PeersVm: PeersControllerDelegate {
                 peerCounter[peerName] = count
                 peerStreamed[peerName] = viaStream
                 didChange()
+                return true
             }
         }
         catch {
 
         }
+        return false
     }
 
 }

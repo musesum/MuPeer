@@ -42,7 +42,7 @@ extension PeersController: MCSessionDelegate {
 
         DispatchQueue.main.async {
             for delegate in self.peersDelegates {
-                delegate.received(data: data, viaStream: false)
+                if delegate.received(data: data, viaStream: false) { return }
             }
         }
     }
