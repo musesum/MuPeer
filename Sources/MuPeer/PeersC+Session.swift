@@ -1,6 +1,7 @@
 //  created by musesum on 12/8/22.
 
 import MultipeerConnectivity
+import MuExtensions
 
 extension PeersController: MCSessionDelegate {
 
@@ -57,7 +58,6 @@ extension PeersController: MCSessionDelegate {
         inputStream.schedule(in: .main, forMode: .common)
         inputStream.open()
         let peerName = fromPeer.displayName
-        logPeer("💧didReceive inputStream from: \"\(peerName)\"")
     }
 
     // files not implemented
