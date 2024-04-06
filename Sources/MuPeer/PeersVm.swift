@@ -1,8 +1,7 @@
 
 import SwiftUI
-
 import MultipeerConnectivity
-import MuExtensions
+import MuFlo
 
 /// This is the View Model for PeersView
 public class PeersVm: ObservableObject {

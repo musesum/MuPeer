@@ -1,7 +1,7 @@
 //  created by musesum on 12/8/22.
 
 import MultipeerConnectivity
-import MuExtensions
+import MuFlo
 
 extension PeersController: MCSessionDelegate {
 
