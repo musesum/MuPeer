@@ -1,7 +1,6 @@
 //  created by musesum on 12/8/22.
 
 import MultipeerConnectivity
-import MuFlo
 
 extension PeersController: MCSessionDelegate {
 
@@ -57,7 +56,6 @@ extension PeersController: MCSessionDelegate {
         inputStream.delegate = self
         inputStream.schedule(in: .main, forMode: .common)
         inputStream.open()
-        let peerName = fromPeer.displayName
     }
 
     // files not implemented

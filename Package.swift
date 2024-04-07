@@ -11,13 +11,13 @@ let package = Package(
             targets: ["MuPeer"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/musesum/MuFlo.git", .branch("main")),
+
     ],
     targets: [
         .target(
             name: "MuPeer",
             dependencies: [
-                .product(name: "MuFlo", package: "MuFlo"),
+                
             ]),
         .testTarget(
             name: "MuPeerTests",

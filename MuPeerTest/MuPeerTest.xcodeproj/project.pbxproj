@@ -21,6 +21,7 @@
 		804109D82A83559C0051C403 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		804109DA2A83559C0051C403 /* MuPeerTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MuPeerTest.entitlements; sourceTree = "<group>"; };
 		804109DC2A83559C0051C403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		80481D742BC30D9800AED325 /* MuPeer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MuPeer; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +39,7 @@
 		804109C82A83559A0051C403 = {
 			isa = PBXGroup;
 			children = (
+				80481D742BC30D9800AED325 /* MuPeer */,
 				804109D32A83559A0051C403 /* MuPeerTest */,
 				804109D22A83559A0051C403 /* Products */,
 			);
