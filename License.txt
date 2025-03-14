@@ -1,42 +1,9 @@
-Unicorn Jockey (UJ) License
+MIT License
 
-Preamble
+Copyright 2025 DeepMuse
 
-The UJ License enables free, open innovation for individuals (“Jockeys”), while fairly requiring larger organizations (“Unicorns”) to pay for commercial use. It ensures creators benefit when companies commercially deploy or integrate this Work.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Two Licenses, Simple Terms:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-🏇 UJ-Jockey (Free Tier)
-
-    Free for:
-	•	Individuals, students, non-profits
-	•	Small businesses (< 100 employees, < $100M valuation)
-
-    Rights:
-	•	Use, modify, and share freely
-	•	Include in your projects (open-source or proprietary)
-
-    Conditions:
-	•	Clearly credit original authors (“attribution”).
-	•	If you share modified Work, you must share modifications under this same license.
-	•	You receive a royalty-free patent license from the Licensor to use patented features within the Work.
-    •	Indemnify author from damages
-    •	DeepMuse Icon not used beyond internal use and hackathons; use your own branding.
-
- 🦄 UJ-Unicorn (Commercial Tier)
-
-    Required for:
-	•	Large companies/entities (> 100 employees, > $100M valuation)
-	•	Government agencies or publicly owned entities
-
-    Rights and Responsibilities:
-	•	Evaluate and test freely.
-	•	To commercially deploy, sell, or integrate this Work into products or services, you must obtain a paid commercial license from the Licensor.
-	•	Negotiated fees apply, typical of industry standards.
-	•	Proprietary terms, patent rights, and commercial uses negotiable.
-
-    Restrictions:
-    •	You may not legally challenge (“sue”) free-tier (Jockey) users regarding this license or their use of the Work.
-    •	Indemnify author from damages
-
-Enjoy!
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
