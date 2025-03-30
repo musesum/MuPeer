@@ -3,20 +3,11 @@
 import UIKit
 import MultipeerConnectivity
 
-@MainActor
-public protocol PeersDelegate: AnyObject, Sendable {
-    func didChange()
-    func received(data: Data, viaStream: Bool) -> Bool
-}
-
 public typealias PeerName = String
 
-/// advertise and browse for peers via Bonjour
-@MainActor
+/// Peers Controller -- advertise and browse for peers via Bonjour
 public class PeersC: NSObject {
-
-    //nonisolated(unsafe) public static var shared = PeersController()
-
+    
     private let myPeerID: MCPeerID
     private let startTime = Date().timeIntervalSince1970
 
@@ -25,12 +16,11 @@ public class PeersC: NSObject {
 
     public var peerState = [PeerName: MCSessionState]()
     public var hasPeers = false
+    public var delegates: [UUID: PeersDelegate] = [:]
 
-    let delegateManager = DelegateManager()
-    public func remove(peersDelegate: any PeersDelegate) async {
-        await delegateManager.remove(delegate: peersDelegate)
+    public func removeDelegate(_ uuid: UUID) {
+        delegates.removeValue(forKey: uuid)
     }
-
     public lazy var session: MCSession = {
         let session = MCSession(peer: self.myPeerID)
         session.delegate = self
@@ -43,9 +33,8 @@ public class PeersC: NSObject {
         return myName.hash + Int(Date().timeIntervalSince1970)
     }()
     
-    override init() {
-        let displayName = UIDevice.current.name
-        myPeerID = MCPeerID(displayName: displayName)
+    public init(_ name: String) {
+        myPeerID = MCPeerID(displayName: name)
         super.init()
         startAdvertising()
         startBrowsing()
@@ -71,7 +60,6 @@ public class PeersC: NSObject {
     private func stopServices() {
         advertiser?.stopAdvertisingPeer()
         advertiser?.delegate = nil
-
         browser?.stopBrowsingForPeers()
         browser?.delegate = nil
     }
@@ -79,10 +67,12 @@ public class PeersC: NSObject {
         Date().timeIntervalSince1970 - startTime
     }
 
-    func logPeer(_ body: PeerName) {
+    func logPeer(_ peerName: PeerName) {
         #if false
         let logTime = String(format: "%.2f", timeElapsed())
         print("⚡️ \(logTime) \(myName): \(body)")
+        #elseif false
+        print("⚡️ \(myName): \(peerName)")
         #endif
     }
 }

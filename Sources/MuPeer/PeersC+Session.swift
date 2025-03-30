@@ -2,7 +2,7 @@
 
 import MultipeerConnectivity
 
-extension PeersController: MCSessionDelegate {
+extension PeersC: MCSessionDelegate {
 
     public func session(_ session: MCSession,
                         peer peerID: MCPeerID,
@@ -23,11 +23,8 @@ extension PeersController: MCSessionDelegate {
                 }
             }
         }
-
-        DispatchQueue.main.async {
-            for peersDelegate in self.peersDelegates {
-                peersDelegate.didChange()
-            }
+        for delegate in self.delegates.values {
+            delegate.didChange()
         }
     }
 
@@ -39,11 +36,8 @@ extension PeersController: MCSessionDelegate {
         let peerName = peerID.displayName
         logPeer("⚡️didReceive: \"\(peerName)\"")
         fixConnectedState(for: peerName)
-
-        DispatchQueue.main.async {
-            for delegate in self.peersDelegates {
-                if delegate.received(data: data, viaStream: false) { return }
-            }
+        for delegate in self.delegates.values {
+            delegate.received(data: data, viaStream: false)
         }
     }
 

@@ -2,12 +2,13 @@
 
 import Foundation
 
-public extension Data {
+extension Data: @unchecked Sendable  {
     /**
      Create a new Data object from inputStream
      - Parameter reading: The input stream to read data from.
      - Note: closes input stream
      */
+
     init(reading input: InputStream) {
 
         self.init()
@@ -30,7 +31,7 @@ public extension Data {
      - Note: Does _not_ close the specified stream.
      */
     init(reading input: InputStream, for byteCount: Int) {
-        
+
         self.init()
         input.open()
 
@@ -39,9 +40,9 @@ public extension Data {
         self.append(buffer, count: read)
         buffer.deallocate()
     }
-
+}
+public extension Data  {
     var bytes: [UInt8] {
-        
         return [UInt8](self)
     }
 }

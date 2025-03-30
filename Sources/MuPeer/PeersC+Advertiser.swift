@@ -2,21 +2,18 @@
 
 import MultipeerConnectivity
 
-extension PeersController: MCNearbyServiceAdvertiserDelegate {
-
+extension PeersC: MCNearbyServiceAdvertiserDelegate {
+    
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
-                           didReceiveInvitationFromPeer peerID: MCPeerID,
-                           withContext _: Data?,
-                           invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-
-        logPeer("didReceiveInvitationFromPeer:  \"\(peerID.displayName)\"")
-
+                                       didReceiveInvitationFromPeer peerID: MCPeerID,
+                                       withContext _: Data?,
+                                       invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        print("didReceiveInvitationFromPeer:  \"\(peerID.displayName)\"")
         invitationHandler(true, session)
     }
-
+    
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
-                           didNotStartAdvertisingPeer error: Error) {
-
-        logPeer("didNotStartAdvertisingPeer \(error)")
+                                       didNotStartAdvertisingPeer error: Error) {
+        print("didNotStartAdvertisingPeer \(error)")
     }
 }

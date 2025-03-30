@@ -1,94 +1,77 @@
-
 import SwiftUI
 import MultipeerConnectivity
 
 /// This is the View Model for PeersView
+@MainActor
+@Observable
 public class PeersVm: ObservableObject {
 
-    public static let shared = PeersVm()
-
-    /// myName and one second counter
-    @Published var peersTitle = "Bonjour"
-
-    /// list of connected peers and their counter
-    @Published var peersList = ""
-
-    private var peersController: PeersController
+    var peersTitle = "Bonjour" /// myName and one second counter
+    var peersList = "" /// list of connected peers
+    private var id: UUID = UUID()
+    private var peersC: PeersC
     private var peerCounter = [String: Int]()
     private var peerStreamed = [String: Bool]()
+    var count = Int(0)
 
     public init() {
-        peersController = PeersController.shared
-        peersController.peersDelegates.append(self)
+        let name = UIDevice.current.name
+        self.peersC = PeersC(name)
+        self.peersC.delegates[id] = self
         oneSecondCounter()
-    }
-    deinit {
-        peersController.remove(peersDelegate: self)
     }
 
     /// create a 1 second counter and send my count to all of my peers
     private func oneSecondCounter() {
-        var count = Int(0)
-        let myName = peersController.myName
-        func loopNext() {
-            count += 1
-
-            // viaStream: false will use MCSessionDelegate
-            // viaStream: true  will use StreamDelegate
-            peersController.sendMessage(["peerName": myName, "count": count],
-                                        viaStream: true)
-            peersTitle = "\(myName): \(count)"
-        }
-        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true)  {_ in
-            loopNext()
+        let myName = peersC.myName
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                guard let self = self else { return }
+                self.count += 1
+                self.peersC.sendMessage(["peerName": myName, "count": self.count], viaStream: true)
+                self.peersTitle = "\(myName): \(self.count)"
+            }
         }
     }
 }
-extension PeersVm: PeersControllerDelegate {
+extension PeersVm: PeersDelegate {
 
-    public func didChange() {
+    nonisolated public func didChange() {
 
-        var peerList = ""
+        Task { @MainActor in
+            var peerList = ""
+            for (name,state) in peersC.peerState {
 
-        for (name,state) in peersController.peerState {
+                peerList += "\n \(state.icon()) \(name)"
 
-            peerList += "\n \(state.icon()) \(name)"
-
-            if let count = peerCounter[name]  {
-                peerList += ": \(count)"
+                if let count = peerCounter[name]  {
+                    peerList += ": \(count)"
+                }
+                if let streamed = peerStreamed[name] {
+                    peerList += streamed ? "💧" : "⚡️"
+                }
             }
-            if let streamed = peerStreamed[name] {
-                peerList += streamed ? "💧" : "⚡️"
-            }
+            self.peersList = peerList
         }
-        self.peersList = peerList
     }
 
+    nonisolated public func received(data: Data, viaStream: Bool) {
 
-    public func received(data: Data, viaStream: Bool) -> Bool {
+        guard let message = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any]
+        else { return }
 
-        do {
-            let message = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String : Any]
+        // filter for internal 1 second counter
+        // other delegates may capture other messages
 
-            // filter for internal 1 second counter
-            // other delegates may capture other messages
+        if let peerName = message["peerName"] as? String,
+           let count = message["count"] as? Int {
 
-            if  let peerName = message["peerName"] as? String,
-                let count = message["count"] as? Int {
-
-                peersController.fixConnectedState(for: peerName)
-
+            Task { @MainActor in
+                peersC.fixConnectedState(for: peerName)
                 peerCounter[peerName] = count
                 peerStreamed[peerName] = viaStream
                 didChange()
-                return true
             }
         }
-        catch {
-
-        }
-        return false
     }
-
 }
-

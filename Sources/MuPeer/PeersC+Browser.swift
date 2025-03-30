@@ -1,9 +1,9 @@
 //  PeersC+Browser.swift
 //  created by musesum on 12/8/22.
 
-import MultipeerConnectivity
+@preconcurrency import MultipeerConnectivity
 
-extension PeersController: MCNearbyServiceBrowserDelegate {
+extension PeersC: MCNearbyServiceBrowserDelegate {
 
     // Found a nearby advertising peer
     public func browser(_ browser: MCNearbyServiceBrowser,
@@ -22,7 +22,7 @@ extension PeersController: MCNearbyServiceBrowserDelegate {
             logPeer("Not inviting \"\(peerName)\"")
         }
 
-        for delegate in peersDelegates {
+        for delegate in self.delegates.values {
             delegate.didChange()
         }
     }
@@ -35,7 +35,6 @@ extension PeersController: MCNearbyServiceBrowserDelegate {
 
     public func browser(_ browser: MCNearbyServiceBrowser,
                         didNotStartBrowsingForPeers error: Error) {
-
         logPeer("didNotStartBrowsingForPeers: \(error)")
     }
 }

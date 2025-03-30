@@ -3,13 +3,10 @@
 import SwiftUI
 
 public struct PeersView: View {
+    @StateObject public var peersVm: PeersVm
 
-    @ObservedObject public var peersVm: PeersVm
-    var peersTitle: String { peersVm.peersTitle }
-    var peersList: String { peersVm.peersList }
-    
     public init(_ peersVm: PeersVm) {
-        self.peersVm = peersVm
+        _peersVm = StateObject(wrappedValue: peersVm)
     }
 
     public var body: some View {
@@ -18,15 +15,14 @@ public struct PeersView: View {
                 Image(systemName: "globe")
                     .imageScale(.medium)
                     .foregroundColor(.white)
-                Text(peersTitle)
+                Text(peersVm.peersTitle)
                     .foregroundColor(.white)
                     .shadow(color: .black, radius: 1.0)
             }
-            Text(peersList)
+            Text(peersVm.peersList)
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 1.0)
         }
         .padding()
     }
 }
-
