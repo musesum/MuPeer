@@ -3,7 +3,8 @@
 import UIKit
 import MultipeerConnectivity
 
-public protocol PeersControllerDelegate: AnyObject {
+@MainActor
+public protocol PeersDelegate: AnyObject, Sendable {
     func didChange()
     func received(data: Data, viaStream: Bool) -> Bool
 }
@@ -11,11 +12,12 @@ public protocol PeersControllerDelegate: AnyObject {
 public typealias PeerName = String
 
 /// advertise and browse for peers via Bonjour
-public class PeersController: NSObject {
+@MainActor
+public class PeersC: NSObject {
 
-    public static var shared = PeersController()
+    //nonisolated(unsafe) public static var shared = PeersController()
 
-    private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    private let myPeerID: MCPeerID
     private let startTime = Date().timeIntervalSince1970
 
     private var advertiser: MCNearbyServiceAdvertiser?
@@ -23,10 +25,12 @@ public class PeersController: NSObject {
 
     public var peerState = [PeerName: MCSessionState]()
     public var hasPeers = false
-    public var peersDelegates = [any PeersControllerDelegate]()
-    public func remove(peersDelegate: any PeersControllerDelegate) {
-        peersDelegates = peersDelegates.filter { return $0 !== peersDelegate }
+
+    let delegateManager = DelegateManager()
+    public func remove(peersDelegate: any PeersDelegate) async {
+        await delegateManager.remove(delegate: peersDelegate)
     }
+
     public lazy var session: MCSession = {
         let session = MCSession(peer: self.myPeerID)
         session.delegate = self
@@ -40,6 +44,8 @@ public class PeersController: NSObject {
     }()
     
     override init() {
+        let displayName = UIDevice.current.name
+        myPeerID = MCPeerID(displayName: displayName)
         super.init()
         startAdvertising()
         startBrowsing()
@@ -81,7 +87,7 @@ public class PeersController: NSObject {
     }
 }
 
-extension PeersController {
+extension PeersC {
 
     /// send message to peers
     public func sendMessage(_ message: [String : Any],
