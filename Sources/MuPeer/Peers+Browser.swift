@@ -3,7 +3,7 @@
 
 @preconcurrency import MultipeerConnectivity
 
-extension PeersC: MCNearbyServiceBrowserDelegate {
+extension Peers: MCNearbyServiceBrowserDelegate {
 
     // Found a nearby advertising peer
     public func browser(_ browser: MCNearbyServiceBrowser,

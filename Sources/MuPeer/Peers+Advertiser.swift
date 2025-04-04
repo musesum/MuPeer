@@ -2,7 +2,7 @@
 
 import MultipeerConnectivity
 
-extension PeersC: MCNearbyServiceAdvertiserDelegate {
+extension Peers: MCNearbyServiceAdvertiserDelegate {
     
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
                                        didReceiveInvitationFromPeer peerID: MCPeerID,

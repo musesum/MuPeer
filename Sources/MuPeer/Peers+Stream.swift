@@ -6,7 +6,7 @@
 
 import MultipeerConnectivity
 
-extension PeersC: StreamDelegate {
+extension Peers: StreamDelegate {
 
     public func stream(_ stream: Stream,
                        handle eventCode: Stream.Event) {

@@ -2,7 +2,7 @@
 
 import MultipeerConnectivity
 
-extension PeersC: MCSessionDelegate {
+extension Peers: MCSessionDelegate {
 
     public func session(_ session: MCSession,
                         peer peerID: MCPeerID,

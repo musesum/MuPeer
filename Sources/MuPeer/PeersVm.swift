@@ -3,44 +3,45 @@ import MultipeerConnectivity
 
 /// This is the View Model for PeersView
 @MainActor
-@Observable
 public class PeersVm: ObservableObject {
+
+    public static let shared = PeersVm()
 
     var peersTitle = "Bonjour" /// myName and one second counter
     var peersList = "" /// list of connected peers
-    private var id: UUID = UUID()
-    private var peersC: PeersC
+    private var peers: Peers
     private var peerCounter = [String: Int]()
     private var peerStreamed = [String: Bool]()
     var count = Int(0)
 
     public init() {
         let name = UIDevice.current.name
-        self.peersC = PeersC(name)
-        self.peersC.delegates[id] = self
+        self.peers = Peers(name)
+        self.peers.delegates["PeersVm"] = self
         oneSecondCounter()
     }
 
     /// create a 1 second counter and send my count to all of my peers
     private func oneSecondCounter() {
-        let myName = peersC.myName
+        let myName = peers.myName
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 guard let self = self else { return }
                 self.count += 1
-                self.peersC.sendMessage(["peerName": myName, "count": self.count], viaStream: true)
+                self.peers.sendMessage(["peerName": myName, "count": self.count], viaStream: true)
                 self.peersTitle = "\(myName): \(self.count)"
             }
         }
     }
 }
+@MainActor
 extension PeersVm: PeersDelegate {
 
     nonisolated public func didChange() {
 
         Task { @MainActor in
             var peerList = ""
-            for (name,state) in peersC.peerState {
+            for (name,state) in peers.peerState {
 
                 peerList += "\n \(state.icon()) \(name)"
 
@@ -67,7 +68,7 @@ extension PeersVm: PeersDelegate {
            let count = message["count"] as? Int {
 
             Task { @MainActor in
-                peersC.fixConnectedState(for: peerName)
+                peers.fixConnectedState(for: peerName)
                 peerCounter[peerName] = count
                 peerStreamed[peerName] = viaStream
                 didChange()

@@ -6,8 +6,8 @@ import MultipeerConnectivity
 public typealias PeerName = String
 
 /// Peers Controller -- advertise and browse for peers via Bonjour
-public class PeersC: NSObject {
-    
+public class Peers: NSObject {
+    nonisolated(unsafe) public static let shared = Peers("DeepMuse")
     private let myPeerID: MCPeerID
     private let startTime = Date().timeIntervalSince1970
 
@@ -16,10 +16,10 @@ public class PeersC: NSObject {
 
     public var peerState = [PeerName: MCSessionState]()
     public var hasPeers = false
-    public var delegates: [UUID: PeersDelegate] = [:]
+    public var delegates: [String: PeersDelegate] = [:]
 
-    public func removeDelegate(_ uuid: UUID) {
-        delegates.removeValue(forKey: uuid)
+    public func removeDelegate(_ key: String) {
+        delegates.removeValue(forKey: key)
     }
     public lazy var session: MCSession = {
         let session = MCSession(peer: self.myPeerID)
@@ -77,7 +77,7 @@ public class PeersC: NSObject {
     }
 }
 
-extension PeersC {
+extension Peers {
 
     /// send message to peers
     public func sendMessage(_ message: [String : Any],
