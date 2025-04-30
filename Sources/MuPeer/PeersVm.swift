@@ -1,8 +1,6 @@
 import SwiftUI
 import MultipeerConnectivity
 
-/// This is the View Model for PeersView
-
 public class PeersVm: @unchecked Sendable, ObservableObject {
 
     public static let shared = PeersVm()

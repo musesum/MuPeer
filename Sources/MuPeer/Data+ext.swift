@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension Data: @unchecked Sendable  {
+extension Data  {
     /**
      Create a new Data object from inputStream
      - Parameter reading: The input stream to read data from.
