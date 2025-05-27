@@ -29,9 +29,6 @@ public class Peers: NSObject {
     public lazy var myName: PeerName = {
         return session.myPeerID.displayName
     }()
-    public lazy var mySessionId: Int = {
-        return myName.hash + Int(Date().timeIntervalSince1970)
-    }()
     
     public init(_ name: String) {
         myPeerID = MCPeerID(displayName: name)

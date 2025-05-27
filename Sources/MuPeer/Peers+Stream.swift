@@ -17,7 +17,7 @@ extension Peers: StreamDelegate {
             let data = Data(reading: stream)
             self.logPeer("💧input bytes:\(data.bytes.count)")
             for delegate in delegates.values {
-                delegate.received(data: data,  viaStream: true)
+                delegate.received(data: data)
             }
         }
     }

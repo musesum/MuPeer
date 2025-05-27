@@ -1,4 +1,5 @@
 # MuPeer
+DEPRECATED -- use MuPeers 
 
 MuPeer allows devices to communicate between devices on the same network. It works over both WiFi and/or Bluetooth. 
 

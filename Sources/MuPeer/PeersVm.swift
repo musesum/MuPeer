@@ -9,7 +9,6 @@ public class PeersVm: @unchecked Sendable, ObservableObject {
     var peersList = "" /// list of connected peers
     private var peers: Peers?
     private var peerCounter = [String: Int]()
-    private var peerStreamed = [String: Bool]()
     var count = Int(0)
 
     public init() {
@@ -29,7 +28,7 @@ public class PeersVm: @unchecked Sendable, ObservableObject {
 
             guard let self = self else { return }
             self.count += 1
-            self.peers?.sendMessage(["peerName": myName, "count": self.count], viaStream: true)
+            self.peers?.sendMessage(["peerName": myName, "count": self.count], viaStream: false)
             self.peersTitle = "\(myName): \(self.count)"
         }
     }
@@ -46,14 +45,11 @@ extension PeersVm: PeersDelegate {
             if let count = peerCounter[name]  {
                 peerList += ": \(count)"
             }
-            if let streamed = peerStreamed[name] {
-                peerList += streamed ? "💧" : "⚡️"
-            }
         }
         self.peersList = peerList
     }
 
-    nonisolated public func received(data: Data, viaStream: Bool) {
+    nonisolated public func received(data: Data) {
 
         guard let message = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any]
         else { return }
@@ -66,7 +62,6 @@ extension PeersVm: PeersDelegate {
 
             peers?.fixConnectedState(for: peerName)
             peerCounter[peerName] = count
-            peerStreamed[peerName] = viaStream
             didChange()
         }
     }

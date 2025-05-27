@@ -37,7 +37,7 @@ extension Peers: MCSessionDelegate {
         logPeer("⚡️didReceive: \"\(peerName)\"")
         fixConnectedState(for: peerName)
         for delegate in self.delegates.values {
-            delegate.received(data: data, viaStream: false)
+            delegate.received(data: data)
         }
     }
 
